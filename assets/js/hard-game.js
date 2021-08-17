@@ -41,3 +41,17 @@ const kittenCardsHard = [
     { name: 'kitten9', img: './assets/images/kitten9.png', },
     { name: 'kitten9', img: './assets/images/kitten9.png', },
 ];
+
+// Creates game board. Credit: Ania Kubow You-Tube video.
+function createHardBoard() {
+    kittenCardsHard.sort(() => 0.5 - Math.random());
+    for (let i = 0; i < kittenCardsHard.length; i++) {
+        var hardCard = document.createElement('img');
+        hardCard.setAttribute('src', './assets/images/kitten-card-back.png');
+        hardCard.setAttribute('data-id', i);
+        hardCard.setAttribute('alt', 'Card back, select to flip over');
+        hardCard.classList.add('col-4', 'col-lg-2', 'kittenHardCard');
+        hardCard.addEventListener('click', flipHardCard);
+        hardGameGrid.appendChild(hardCard);
+    }
+}
