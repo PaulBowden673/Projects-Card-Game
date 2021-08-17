@@ -55,3 +55,49 @@ function createHardBoard() {
         hardGameGrid.appendChild(hardCard);
     }
 }
+// Flips card over and calls function to check for a match
+function flipHardCard() {
+    var hardCardId = this.getAttribute('data-id');
+    hardCardsSelected.push(kittenCardsHard[hardCardId].name);
+    hardCardsSelectedId.push(hardCardId);
+    // Add alt text to make sure screen reader users can also play the game
+    this.setAttribute('alt', fruitCardsHard[hardCardId].name);
+    this.setAttribute('src', fruitCardsHard[hardCardId].img);
+    if (hardCardsSelected.length === 2) {
+        setTimeout(checkHardMatch, 300);
+    } else if (hardCardsSelected.length > 2) {
+        this.setAttribute('src', './assets/images/kitten-card-back.png');
+    }
+    
+}
+// Check for a match. Credit: Ania Kubrow
+function checkHardMatch() {
+    var hardCards = document.querySelectorAll('img');
+    const hardCardOneId = hardCardsSelectedId[0];
+    const hardCardTwoId = hardCardsSelectedId[1];
+    // Bug fix: test easyCardsSelected for true equality, not easyCardsSelectedId
+    /* Bug fix: test for both match between data names and make sure ids don't match 
+     to make sure users cannot pick the same card twice to count as a match */
+    if (hardCardsSelected[0] === hardCardsSelected[1] && hardCardOneId !== hardCardTwoId) {
+        hardCardsRight.push(hardCardsSelected);
+        // Moves the counter
+        moveCounter();
+        // Bug fix: Remove event listener from selected cards to prevent users
+        // cheating by clicking the same pair more than once
+        hardCards[hardCardOneId].removeEventListener("click", flipHardCard);
+        hardCards[hardCardTwoId].removeEventListener("click", flipHardCard);
+        // Gives feedback to user that they found a match
+        hardCards[hardCardOneId].classList.add('match');
+        hardCards[hardCardTwoId].classList.add('match');
+    } else {
+        moveCounter();
+        // Credit for setTimeout: Free Code Camp
+        setTimeout(changeCardBack, 400);
+        function changeCardBack() {
+            hardCards[hardCardOneId].setAttribute('src', './assets/images/fruit-card-back.png');
+            hardCards[hardCardTwoId].setAttribute('src', './assets/images/fruit-card-back.png');
+      // Reverts alt for card images to blank  to prevent cheating 
+            hardCards[hardCardOneId].setAttribute('alt', 'Card back, select to flip over');
+            hardCards[hardCardTwoId].setAttribute('alt', 'Card back, select to flip over');
+        };
+    }
