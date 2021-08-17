@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Roboto:wght@400;500;700;900&display=swap');
+
+body {
+    background-color: #b8e6f8;
+    font-family: 'Mina', sans-serif;
+    font-size: 18px;
+}
+
+h1,
+h2, 
+h3, 
+h4 {
+    font-family: 'Roboto', sans-serif;
+}
+
+p {
+    font-family: 'Lato', sans-serif;
+}
+   
+h1 {
+    font-size: 45px;
+}
+
+h2 {
+    font-size: 25px;
+}
+
+h3 {
+    font-size: 20px;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+li a:hover {
+    color: rgb(255, 0, 0);
+}
+
+li {
+    list-style: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.footer a {
+    font-size: 35px;
+    color: ;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+footer {
+    text-align: center;
+}
+li a {
+    font-size: 20px;
+    margin: 20px;
+}
+
+.active {
+    border-bottom: 3px solid #348857;
+    color: #348857;
+}
+
+nav {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+button {
+    background-color: #6FCF97;
+    font-size: 20px;
+    border-style: none;
+    border-radius: 4px;
+}
+
+.button {
+    background-color: #6FCF97;
+    font-size: 20px;
+    border-style: none;
+    border-radius: 4px;
+}
+
+#home { 
+    float: left;
+}
+
+#board, #easyboard {
+    margin: 0 auto;
+    margin-bottom: 10px;
+    clear: both;
+}
+
+.no-display {
+    visibility: hidden;
+}
