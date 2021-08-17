@@ -253,3 +253,71 @@ footer ul {
 .match {
     border: 4px solid #6FCF97; 
 }
+
+* Media queries to ensure the content is correctly layed out on mobile and tablet view */ 
+
+@media screen and (min-width: 300px) {
+    .fruitCard {
+        margin-bottom: 10px;
+    }
+
+    #board, #easyboard {
+        margin-top: 10px;
+    }
+    
+    #return-home {
+        margin-left: 20px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    #return-home {
+        margin-left: 150px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    footer ul li a {
+        margin: 0;
+        padding: 0;
+        font-size: 10px;
+    }
+
+    footer ul {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    .fruitCard {
+        padding: 40px;
+   }
+
+   #board {
+       width: 50%;
+   }
+
+   #return-home {
+    margin-left: 300px;
+}
+}
+
+@media screen and (min-width: 300px) {
+    .fruitCard {
+        margin-bottom: 10px;
+    }
+
+    #board {
+        width: 70%;
+    }   
+}
+
+@media screen and (min-width: 900px) {
+    /* the easy mode of the game is seperated here due to the large card sizes when there are less of them, 
+    pushing the buttons and counters out of view of the user while playing unless the width
+    is set as smaller then the moderate and hard modes */ 
+    #easyboard {
+        width: 50%;
+    }
+}
