@@ -61,8 +61,8 @@ function flipHardCard() {
     hardCardsSelected.push(kittenCardsHard[hardCardId].name);
     hardCardsSelectedId.push(hardCardId);
     // Add alt text to make sure screen reader users can also play the game
-    this.setAttribute('alt', fruitCardsHard[hardCardId].name);
-    this.setAttribute('src', fruitCardsHard[hardCardId].img);
+    this.setAttribute('alt', kittenCardsHard[hardCardId].name);
+    this.setAttribute('src', kittenCardsHard[hardCardId].img);
     if (hardCardsSelected.length === 2) {
         setTimeout(checkHardMatch, 300);
     } else if (hardCardsSelected.length > 2) {
@@ -94,8 +94,8 @@ function checkHardMatch() {
         // Credit for setTimeout: Free Code Camp
         setTimeout(changeCardBack, 400);
         function changeCardBack() {
-            hardCards[hardCardOneId].setAttribute('src', './assets/images/fruit-card-back.png');
-            hardCards[hardCardTwoId].setAttribute('src', './assets/images/fruit-card-back.png');
+            hardCards[hardCardOneId].setAttribute('src', './assets/images/kitten-card-back.png');
+            hardCards[hardCardTwoId].setAttribute('src', './assets/images/kitten-card-back.png');
       // Reverts alt for card images to blank  to prevent cheating 
             hardCards[hardCardOneId].setAttribute('alt', 'Card back, select to flip over');
             hardCards[hardCardTwoId].setAttribute('alt', 'Card back, select to flip over');
@@ -106,7 +106,7 @@ function checkHardMatch() {
      hardCardsSelected = [];
      hardCardsSelectedId =[];
      resultDisplay.textContent = hardCardsRight.length;
-     if (hardCardsRight.length === fruitCardsHard.length/2) {
+     if (hardCardsRight.length === kittenCardsHard.length/2) {
          setTimeout(correctHardMatch, 200); 
      }
  }
@@ -120,9 +120,9 @@ function resetHardGame() {
     hardCardsSelectedId = [];
     hardCardsRight = [];
     hardCards = document.querySelectorAll('img');
-    fruitCardsHard.sort(() => 0.5 - Math.random());
+    kittenCardsHard.sort(() => 0.5 - Math.random());
     hardCards.forEach((c) => {
-        c.setAttribute('src', './assets/images/fruit-card-back.png');
+        c.setAttribute('src', './assets/images/kitten-card-back.png');
         c.addEventListener('click', flipHardCard);
         // Removes correct match feedback to users
         c.classList.remove('match');
