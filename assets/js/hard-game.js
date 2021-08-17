@@ -26,7 +26,7 @@ function startHardGame() {
 // Array of objects used in all games usinf=g .slice method
 const kittenCardsHard = [
     { name: 'kitten 1', img: './assets/images/kitten1.png', },
-    { name: 'kitten 1', img: './assets/images/kittem1.png', },
+    { name: 'kitten 1', img: './assets/images/kitten1.png', },
     { name: 'kitten 2', img: './assets/images/kitten2.png', },
     { name: 'kitten 2', img: './assets/images/kitten2.png', },
     { name: 'kitten 3', img: './assets/images/kitten3.png', },
@@ -113,6 +113,7 @@ function checkHardMatch() {
 
 function correctHardMatch() {
     alert('Wow you Crazy Cat Person, you found all the kittens!');
+   //$('#myModal2').modal('show');
     resetHardGame();
 }
 

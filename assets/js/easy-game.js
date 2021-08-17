@@ -5,8 +5,8 @@ const resultDisplay = document.querySelector('#result');
 function displayGame() {
     document.getElementById('board').classList.remove('no-display');
     document.getElementById('timer-and-home').classList.remove('no-display');
-    document.getElementById('introduction-section').remove();
-    document.getElementById('start-game-prompt').remove();
+    document.getElementById('introduction').remove();
+    document.getElementById('start-game').remove();
     document.getElementById('board-content').classList.remove('no-display');
     setTimer();
 }
@@ -48,7 +48,7 @@ function startEasyGame() {
     setInterval(setTimer, 1200);
 }
 
-const kittenCardsEasy = kittenCardsModerate.slice(0, 6);
+const kittenCardsEasy = kittenCardsMedium.slice(0, 6);
 
 // Credit for function: Ania Kubow You-Tube
 function createEasyBoard() {
@@ -59,7 +59,7 @@ function createEasyBoard() {
         var easyCard = document.createElement('img');
         easyCard.setAttribute('src', './assets/images/kitten-card-back.png');
         easyCard.setAttribute('data-id', i);
-        // ScreenReader text
+        // Screen Reader text
         easyCard.setAttribute('alt', 'Card back, select to flip over');
         easyCard.classList.add('col-6', 'col-lg-4', 'kittenCard');
         easyCard.addEventListener('click', flipEasyCard);
@@ -120,6 +120,9 @@ function correctEasyMatch() {
     alert('Wow Easy Tiger, you found all the kittens. Why not try a harder setting');
     resetEasyGame();
 }
+
+
+
 
 // Move counter
 // Credit: Michelle Toscano. https://github.com/Michelle3334/freaky_memory/blob/master/assets/js/script.js

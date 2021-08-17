@@ -5,7 +5,7 @@ var medCardsSelectedId = [];
 var medCardsRight = [];document.getElementById('medium-button').addEventListener('click', startMediumGame);
 
 //Start up function for medium-game
-function startmediumGame() {
+function startMediumGame() {
     displayGame();
     createMedBoard();
     document.getElementById('reset').addEventListener('click', resetMedGame);
@@ -84,7 +84,7 @@ function checkMatch() {
 }
 
 function correctMedMatch() {
-    alert('Wow you Marvlous Moog, you found all the kittens. Why mnot try a harder setting.');
+    alert('Wow you Marvlous Moog, you found all the kittens. Why not try a harder setting.');
     resetMedGame();
 }
 
