@@ -101,3 +101,33 @@ function checkHardMatch() {
             hardCards[hardCardTwoId].setAttribute('alt', 'Card back, select to flip over');
         };
     }
+
+     
+     hardCardsSelected = [];
+     hardCardsSelectedId =[];
+     resultDisplay.textContent = hardCardsRight.length;
+     if (hardCardsRight.length === fruitCardsHard.length/2) {
+         setTimeout(correctHardMatch, 200); 
+     }
+ }
+ function correctHardMatch() {
+    alert('WOW you are a Crazy Cat person, you found all the Kittens!');
+    resetHardGame();
+}
+// Resets hard game
+function resetHardGame() {
+    hardCardsSelected = [];
+    hardCardsSelectedId = [];
+    hardCardsRight = [];
+    hardCards = document.querySelectorAll('img');
+    fruitCardsHard.sort(() => 0.5 - Math.random());
+    hardCards.forEach((c) => {
+        c.setAttribute('src', './assets/images/fruit-card-back.png');
+        c.addEventListener('click', flipHardCard);
+        // Removes correct match feedback to users
+        c.classList.remove('match');
+    });
+    resultDisplay.textContent = `0`;
+    counter.innerHTML = `0`;
+    resetTimer();
+}
