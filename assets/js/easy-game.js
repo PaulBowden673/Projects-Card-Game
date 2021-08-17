@@ -135,7 +135,7 @@ function resetEasyGame() {
     easyCardsRight = [];
     //Shuffles cards
     easyCards = document.querySelectorAll('img');
-    fruitCardsEasy.sort(() => 0.5 - Math.random());
+    kittenCardsEasy.sort(() => 0.5 - Math.random());
     easyCards.forEach((c) => {
         c.setAttribute('src', './assets/images/kitten-card-back.png');
         c.addEventListener('click', flipEasyCard);
