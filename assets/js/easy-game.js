@@ -66,3 +66,45 @@ function createEasyBoard() {
         easyGameGrid.appendChild(easyCard);
     }
 }
+
+// Reveals front card faces and calls function to check for a match
+function flipEasyCard() {
+    var easyCardId = this.getAttribute('data-id'); // getting attribute from element clicked
+    easyCardsSelected.push(fruitCardsEasy[easyCardId].name);
+    easyCardsSelectedId.push(easyCardId);
+    this.setAttribute('src', fruitCardsEasy[easyCardId].img);
+    this.setAttribute('alt', fruitCardsEasy[easyCardId].name);
+    if (easyCardsSelected.length === 2) {
+        checkEasyMatch(); 
+    } else if (easyCardsSelected.length > 2) {
+        this.setAttribute('src', './assets/images/fruit-card-back.png');
+    }
+    // Bug fix: To prevent more than 2 cards being tested at the same time the array length is limited. Credit: Stack overflow, see credits in README.md for more details
+    easyCardsSelected.length = Math.min(easyCardsSelected.length, 2);
+}
+
+// Check for a match. Credit: Ania Kubrow You-tube
+function checkEasyMatch() {
+    var easyCards = document.querySelectorAll('img');
+    const easyCardOneId = easyCardsSelectedId[0];
+    const easyCardTwoId = easyCardsSelectedId[1];
+      if (easyCardsSelected[0] === easyCardsSelected[1] && easyCardOneId !== easyCardTwoId) {
+        easyCardsRight.push(easyCardsSelected);
+        // Moves the counter
+        moveCounter();
+        easyCards[easyCardOneId].removeEventListener("click", flipEasyCard);
+        easyCards[easyCardTwoId].removeEventListener("click", flipEasyCard);
+        // Matched cards feedback
+        easyCards[easyCardOneId].classList.add('match');
+        easyCards[easyCardTwoId].classList.add('match');
+    } else {
+        moveCounter();
+        // Credit for setTimeout: Free Code Camp
+        setTimeout(changeCardBack, 400);
+        function changeCardBack() {
+            easyCards[easyCardOneId].setAttribute('src', './assets/images/kitten-card-back.png');
+            easyCards[easyCardTwoId].setAttribute('src', './assets/images/kitten-card-back.png');
+            easyCards[easyCardOneId].setAttribute('alt', 'Card back, select to flip over');
+            easyCards[easyCardTwoId].setAttribute('alt', 'Card back, select to flip over');
+        };
+    }
