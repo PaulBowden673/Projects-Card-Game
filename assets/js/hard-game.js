@@ -1,9 +1,10 @@
-// Hides game until game difficulty level is selected
+// Hide game until start
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('board').classList.add('no-display');
     document.getElementById('timer-and-home').classList.add('no-display');
     document.getElementById('board-content').classList.add('no-display');
 });
+
 // Variables for hard-game
 const hardGameGrid = document.querySelector('#board');
 var hardCardsSelected = [];
@@ -12,37 +13,39 @@ var hardCardsRight = [];
 
 document.getElementById('hard-button').addEventListener('click', startHardGame);
 
-// start up function for hard-game
+// Start up function for hard-game
 function startHardGame() {
     displayGame();
     createHardBoard();
     document.getElementById('reset').addEventListener('click', resetHardGame);
     counter.innerHTML = `0`;
     resultDisplay.innerHTML = `0`;
+    setInterval(setTimer, 1200);
 }
-// Array of objects to be injected into the DOM used with .slice method for all games
+
+// Array of objects used in all games usinf=g .slice method
 const kittenCardsHard = [
-    { name: 'kitten1', img: './assets/images/kitten1.png', },
-    { name: 'kitten1', img: './assets/images/kitten1.png', },
-    { name: 'kitten2', img: './assets/images/kitten2.png', },
-    { name: 'kitten2', img: './assets/images/kitten2.png', },
-    { name: 'kitten3', img: './assets/images/kitten3.png', },
-    { name: 'kitten3', img: './assets/images/kitten3.png', },
-    { name: 'kitten4', img: './assets/images/kitten4.png', },
-    { name: 'kitten4', img: './assets/images/kitten4.png', },
-    { name: 'kitten5', img: './assets/images/kitten5.png', },
-    { name: 'kitten5', img: './assets/images/kitten5.png', },
-    { name: 'kitten6', img: './assets/images/kitten6.png', },
-    { name: 'kitten6', img: './assets/images/kitten6.png', },
-    { name: 'kitten7', img: './assets/images/kitten7.png', },
-    { name: 'kitten7', img: './assets/images/kitten7.png', },
-    { name: 'kitten8', img: './assets/images/kitten8.png', },
-    { name: 'kitten8', img: './assets/images/kitten8.png', },
-    { name: 'kitten9', img: './assets/images/kitten9.png', },
-    { name: 'kitten9', img: './assets/images/kitten9.png', },
+    { name: 'kitten 1', img: './assets/images/kitten1.png', },
+    { name: 'kitten 1', img: './assets/images/kittem1.png', },
+    { name: 'kitten 2', img: './assets/images/kitten2.png', },
+    { name: 'kitten 2', img: './assets/images/kitten2.png', },
+    { name: 'kitten 3', img: './assets/images/kitten3.png', },
+    { name: 'kitten 3', img: './assets/images/kitten3.png', },
+    { name: 'kitten 4', img: './assets/images/kitten4.png', },
+    { name: 'kitten 4', img: './assets/images/kitten4.png', },
+    { name: 'kitten 5', img: './assets/images/kitten5.png', },
+    { name: 'kitten 5', img: './assets/images/kitten5.png', },
+    { name: 'kitten 6', img: './assets/images/kitten6.png', },
+    { name: 'kitten 6', img: './assets/images/kitten6.png', },
+    { name: 'kitten 7', img: './assets/images/kitten7.png', },
+    { name: 'kitten 7', img: './assets/images/kitten7.png', },
+    { name: 'kitten 8', img: './assets/images/kitten8.png', },
+    { name: 'kitten 8', img: './assets/images/kitten8.png', },
+    { name: 'kitten 9', img: './assets/images/kitten9.png', },
+    { name: 'kitten 9', img: './assets/images/kitten9.png', },
 ];
 
-// Creates game board. Credit: Ania Kubow You-Tube video.
+// Game board. Credit: Ania Kubow You-Tube
 function createHardBoard() {
     kittenCardsHard.sort(() => 0.5 - Math.random());
     for (let i = 0; i < kittenCardsHard.length; i++) {
@@ -55,12 +58,13 @@ function createHardBoard() {
         hardGameGrid.appendChild(hardCard);
     }
 }
-// Flips card over and calls function to check for a match
+
+// Flips cards and checks for match
 function flipHardCard() {
     var hardCardId = this.getAttribute('data-id');
     hardCardsSelected.push(kittenCardsHard[hardCardId].name);
     hardCardsSelectedId.push(hardCardId);
-    // Add alt text to make sure screen reader users can also play the game
+    // ScreenReader text
     this.setAttribute('alt', kittenCardsHard[hardCardId].name);
     this.setAttribute('src', kittenCardsHard[hardCardId].img);
     if (hardCardsSelected.length === 2) {
@@ -68,25 +72,22 @@ function flipHardCard() {
     } else if (hardCardsSelected.length > 2) {
         this.setAttribute('src', './assets/images/kitten-card-back.png');
     }
-    
+    hardCardsSelected.length = Math.min(hardCardsSelected.length, 2);
 }
-// Check for a match. Credit: Ania Kubrow
+
+// Match function. Credit: Ania Kubrow You-Tube
 function checkHardMatch() {
     var hardCards = document.querySelectorAll('img');
     const hardCardOneId = hardCardsSelectedId[0];
     const hardCardTwoId = hardCardsSelectedId[1];
-    // Bug fix: test easyCardsSelected for true equality, not easyCardsSelectedId
-    /* Bug fix: test for both match between data names and make sure ids don't match 
-     to make sure users cannot pick the same card twice to count as a match */
     if (hardCardsSelected[0] === hardCardsSelected[1] && hardCardOneId !== hardCardTwoId) {
         hardCardsRight.push(hardCardsSelected);
-        // Moves the counter
+    
         moveCounter();
-        // Bug fix: Remove event listener from selected cards to prevent users
-        // cheating by clicking the same pair more than once
+        
         hardCards[hardCardOneId].removeEventListener("click", flipHardCard);
         hardCards[hardCardTwoId].removeEventListener("click", flipHardCard);
-        // Gives feedback to user that they found a match
+        // Feedback on match
         hardCards[hardCardOneId].classList.add('match');
         hardCards[hardCardTwoId].classList.add('match');
     } else {
@@ -96,25 +97,26 @@ function checkHardMatch() {
         function changeCardBack() {
             hardCards[hardCardOneId].setAttribute('src', './assets/images/kitten-card-back.png');
             hardCards[hardCardTwoId].setAttribute('src', './assets/images/kitten-card-back.png');
-      // Reverts alt for card images to blank  to prevent cheating 
+        
             hardCards[hardCardOneId].setAttribute('alt', 'Card back, select to flip over');
             hardCards[hardCardTwoId].setAttribute('alt', 'Card back, select to flip over');
         };
     }
+    // Reset array
+    hardCardsSelected = [];
+    hardCardsSelectedId =[];
+    resultDisplay.textContent = hardCardsRight.length;
+    if (hardCardsRight.length === kittenCardsHard.length/2) {
+        setTimeout(correctHardMatch, 200); 
+    }
+}
 
-     
-     hardCardsSelected = [];
-     hardCardsSelectedId =[];
-     resultDisplay.textContent = hardCardsRight.length;
-     if (hardCardsRight.length === kittenCardsHard.length/2) {
-         setTimeout(correctHardMatch, 200); 
-     }
- }
- function correctHardMatch() {
-    alert('WOW you are a Crazy Cat person, you found all the Kittens!');
+function correctHardMatch() {
+    alert('Wow you Crazy Cat Person, you found all the kittens!');
     resetHardGame();
 }
-// Resets hard game
+
+// Reset hard-game
 function resetHardGame() {
     hardCardsSelected = [];
     hardCardsSelectedId = [];
@@ -124,7 +126,7 @@ function resetHardGame() {
     hardCards.forEach((c) => {
         c.setAttribute('src', './assets/images/kitten-card-back.png');
         c.addEventListener('click', flipHardCard);
-        // Removes correct match feedback to users
+        // Remove match feedback 
         c.classList.remove('match');
     });
     resultDisplay.textContent = `0`;

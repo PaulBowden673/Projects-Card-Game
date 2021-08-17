@@ -1,3 +1,6 @@
+// Makes sure the 'active' indicator on navbar is there upon page loading 
+window.onload = setActive;
+
 // Global variable for nav elements
 const nav = document.getElementById('nav').getElementsByTagName('a');
 

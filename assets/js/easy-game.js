@@ -1,7 +1,7 @@
-// Global variable score counter
+// Global variable across all versions of the game to display score counter
 const resultDisplay = document.querySelector('#result');
 
-// Removes how to play information inserts game
+// Inserts previously hidden content
 function displayGame() {
     document.getElementById('board').classList.remove('no-display');
     document.getElementById('timer-and-home').classList.remove('no-display');
@@ -10,6 +10,7 @@ function displayGame() {
     document.getElementById('board-content').classList.remove('no-display');
     setTimer();
 }
+
 // Credit for timer functions: user efuzz on Stack Overflow.
 var totalSeconds = 0;
 
@@ -44,22 +45,21 @@ function startEasyGame() {
     document.getElementById('reset').addEventListener('click', resetEasyGame);
     counter.innerHTML = `0`;
     resultDisplay.innerHTML = `0`;
-    
+    setInterval(setTimer, 1200);
 }
 
-const kittenCardsEasy = kittenCardsMedium.slice(0, 6);
+const kittenCardsEasy = kittenCardsModerate.slice(0, 6);
 
-// Credit for function: Ania Kubow you-tube
+// Credit for function: Ania Kubow You-Tube
 function createEasyBoard() {
-    // Credit for .sort method of shuffling: Marina Ferreira
+    // Credit for .sort method shuffle: Marina Ferreira
     kittenCardsEasy.sort(() => 0.5 - Math.random());
-    // game board id changed to fit in browser
     easyGameGrid.id = 'easyboard';
     for (let i = 0; i < kittenCardsEasy.length; i++) {
         var easyCard = document.createElement('img');
         easyCard.setAttribute('src', './assets/images/kitten-card-back.png');
         easyCard.setAttribute('data-id', i);
-        // Add alt text to make sure screen reader users can also play the game
+        // ScreenReader text
         easyCard.setAttribute('alt', 'Card back, select to flip over');
         easyCard.classList.add('col-6', 'col-lg-4', 'kittenCard');
         easyCard.addEventListener('click', flipEasyCard);
@@ -67,9 +67,9 @@ function createEasyBoard() {
     }
 }
 
-// Reveals front card faces and calls function to check for a match
+// Flips cards and checks for match
 function flipEasyCard() {
-    var easyCardId = this.getAttribute('data-id'); // getting attribute from element clicked
+    var easyCardId = this.getAttribute('data-id'); 
     easyCardsSelected.push(kittenCardsEasy[easyCardId].name);
     easyCardsSelectedId.push(easyCardId);
     this.setAttribute('src', kittenCardsEasy[easyCardId].img);
@@ -79,22 +79,21 @@ function flipEasyCard() {
     } else if (easyCardsSelected.length > 2) {
         this.setAttribute('src', './assets/images/kitten-card-back.png');
     }
-    // Bug fix: To prevent more than 2 cards being tested at the same time the array length is limited. Credit: Stack overflow, see credits in README.md for more details
     easyCardsSelected.length = Math.min(easyCardsSelected.length, 2);
 }
 
-// Check for a match. Credit: Ania Kubrow You-tube
+// Check for match. Credit: Ania Kubrow You-Tube
 function checkEasyMatch() {
     var easyCards = document.querySelectorAll('img');
     const easyCardOneId = easyCardsSelectedId[0];
     const easyCardTwoId = easyCardsSelectedId[1];
-      if (easyCardsSelected[0] === easyCardsSelected[1] && easyCardOneId !== easyCardTwoId) {
+    if (easyCardsSelected[0] === easyCardsSelected[1] && easyCardOneId !== easyCardTwoId) {
         easyCardsRight.push(easyCardsSelected);
-        // Moves the counter
+        // Move counter
         moveCounter();
         easyCards[easyCardOneId].removeEventListener("click", flipEasyCard);
         easyCards[easyCardTwoId].removeEventListener("click", flipEasyCard);
-        // Matched cards feedback
+        // Match feedback
         easyCards[easyCardOneId].classList.add('match');
         easyCards[easyCardTwoId].classList.add('match');
     } else {
@@ -108,22 +107,22 @@ function checkEasyMatch() {
             easyCards[easyCardTwoId].setAttribute('alt', 'Card back, select to flip over');
         };
     }
+    // Reset array
+    easyCardsSelected = [];
+    easyCardsSelectedId = [];
+    resultDisplay.textContent = easyCardsRight.length; 
+    if (easyCardsRight.length === kittenCardsEasy.length/2) {
+        setTimeout(correctEasyMatch, 200);        
+    }
+}
 
-       // Resets array of cards
-       easyCardsSelected = [];
-       easyCardsSelectedId = [];
-       resultDisplay.textContent = easyCardsRight.length; 
-       if (easyCardsRight.length === kittenCardsEasy.length/2) {
-           setTimeout(correctEasyMatch, 200);        
-       }
-   }
-   function correctEasyMatch() {
-    alert('WOW Easy Tiger, you found all the Kittens. Try a harder setting!');
+function correctEasyMatch() {
+    alert('Wow Easy Tiger, you found all the kittens. Why not try a harder setting');
     resetEasyGame();
 }
 
-
-// Move counter 
+// Move counter
+// Credit: Michelle Toscano. https://github.com/Michelle3334/freaky_memory/blob/master/assets/js/script.js
 function moveCounter() {
     counter.innerHTML ++;
 }
@@ -133,12 +132,13 @@ function resetEasyGame() {
     easyCardsSelected = [];
     easyCardsSelectedId = [];
     easyCardsRight = [];
-    //Shuffles cards
+    // Shuffle cards
     easyCards = document.querySelectorAll('img');
     kittenCardsEasy.sort(() => 0.5 - Math.random());
     easyCards.forEach((c) => {
         c.setAttribute('src', './assets/images/kitten-card-back.png');
         c.addEventListener('click', flipEasyCard);
+        //Remove feedback
         c.classList.remove('match');
     });
     resultDisplay.textContent = `0`;

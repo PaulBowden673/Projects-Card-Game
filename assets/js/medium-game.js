@@ -4,32 +4,35 @@ var medCardsSelected = [];
 var medCardsSelectedId = [];
 var medCardsRight = [];document.getElementById('medium-button').addEventListener('click', startMediumGame);
 
-// Start funcrion for medium-game
-function startMediumGame() {
+//Start up function for medium-game
+function startmediumGame() {
     displayGame();
     createMedBoard();
     document.getElementById('reset').addEventListener('click', resetMedGame);
     counter.innerHTML = `0`;
     resultDisplay.innerHTML = `0`;
- 
+    setInterval(setTimer, 1200);
 }
 
 const kittenCardsMedium = kittenCardsHard.slice(0,12);
 
-// Creates game board. Credit: Ania Kubow You-Tube
+// Game board. Credit: Ania Kubow. You-Tube
 function createMedBoard() {
-    KittenCardsMedium.sort(() => 0.5 - Math.random());
+    // Credit for .sort method for shuffle: Marina Ferreira
+    kittenCardsMedium.sort(() => 0.5 - Math.random());
     for (let i = 0; i < kittenCardsMedium.length; i++) {
         var medCard = document.createElement('img');
         medCard.setAttribute('src', './assets/images/kitten-card-back.png');
         medCard.setAttribute('data-id', i);
+        // ScreenReader text
         medCard.setAttribute('alt', 'Card back, select to flip over');
         medCard.classList.add('col-4', 'col-lg-2', 'kittenMedCard');
         medCard.addEventListener('click', flipMedCard);
         medGameGrid.appendChild(medCard);
     }
 }
-// Flip cards and check for match
+
+// Flips cards and checks for match
 function flipMedCard() {
     var medCardId = this.getAttribute('data-id');
     medCardsSelected.push(kittenCardsMedium[medCardId].name);
@@ -41,19 +44,19 @@ function flipMedCard() {
     } else if (medCardsSelected.length > 2) {
         this.setAttribute('src', './assets/images/kitten-card-back.png');
     }
-        medCardsSelected.length = Math.min(medCardsSelected.length, 2);
+    medCardsSelected.length = Math.min(medCardsSelected.length, 2);
 }
 
-// Check for a match. Credit: Ania Kubrow You-Tube
+// Check for  match. Credit: Ania Kubrow You-Tube
 function checkMatch() {
     var medCards = document.querySelectorAll('img');
     const medCardOneId = medCardsSelectedId[0];
     const medCardTwoId = medCardsSelectedId[1];
-     if (medCardsSelected[0] === medCardsSelected[1] && medCardOneId !== medCardTwoId) {
+    if (medCardsSelected[0] === medCardsSelected[1] && medCardOneId !== medCardTwoId) {
         medCardsRight.push(medCardsSelected);
-        //Move counter
+        
         moveCounter();
-    
+        
         medCards[medCardOneId].removeEventListener("click", flipMedCard);
         medCards[medCardTwoId].removeEventListener("click", flipMedCard);
         // Match feedback
@@ -66,24 +69,26 @@ function checkMatch() {
         function changeCardBack() {
             medCards[medCardOneId].setAttribute('src', './assets/images/kitten-card-back.png');
             medCards[medCardTwoId].setAttribute('src', './assets/images/kitten-card-back.png');
+
             medCards[medCardOneId].setAttribute('alt', 'Card back, select to flip over');
             medCards[medCardTwoId].setAttribute('alt', 'Card back, select to flip over');
         };
     }
-     // Reset game
-     medCardsSelected = [];
-     medCardsSelectedId = [];
-     resultDisplay.textContent = medCardsRight.length; 
-     if (medCardsRight.length === kittenCardsMedium.length/2) {
+    // Reset array
+    medCardsSelected = [];
+    medCardsSelectedId = [];
+    resultDisplay.textContent = medCardsRight.length; 
+    if (medCardsRight.length === kittenCardsMedium.length/2) {
         setTimeout(correctMedMatch, 200);    
-     }
- }
- 
- function correctMedMatch() {
-     alert('WOW you Marvelous Moog, you found all the Kittens. Try a harder setting!');
-     resetMedGame();
- }
- // Reset medium-game
+    }
+}
+
+function correctMedMatch() {
+    alert('Wow you Marvlous Moog, you found all the kittens. Why mnot try a harder setting.');
+    resetMedGame();
+}
+
+// Resets medium-game
 function resetMedGame() {
     medCardsSelected = [];
     medCardsSelectedId = [];
@@ -93,6 +98,7 @@ function resetMedGame() {
     medCards.forEach((c) => {
         c.setAttribute('src', './assets/images/kitten-card-back.png');
         c.addEventListener('click', flipMedCard);
+        // Removes feeback
         c.classList.remove('match');
     });
     resultDisplay.textContent = `0`;
