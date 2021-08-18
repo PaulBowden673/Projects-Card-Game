@@ -7,16 +7,6 @@ body {
     font-size: 18px;
 }
 
-#bg {
-    position: absolute;
-    background: cover no-repeat;
-    object-fit: contain;
-    
-
-    
-        z-index: -1;
-}
-
 h1,
 h2, 
 h3, 
